@@ -6,6 +6,11 @@ import { Connection } from 'mongoose';
 export class AppController {
   constructor(@InjectConnection() private connection: Connection) {}
 
+  @Get()
+  getHello(): string {
+    return 'Hello from Cat ChatBot Backend!';
+  }
+
   @Get('test-db')
   async testDatabase() {
     try {
@@ -18,5 +23,14 @@ export class AppController {
     } catch (error) {
       return { status: 'error', message: 'Bir hata oluştu: ' + error.message };
     }
+  }
+
+  @Get('test')
+  testEndpoint() {
+    return {
+      message: 'Cat ChatBot API is working!',
+      timestamp: new Date().toISOString(),
+      environment: process.env.NODE_ENV || 'development'
+    };
   }
 }
