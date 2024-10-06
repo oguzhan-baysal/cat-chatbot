@@ -7,7 +7,7 @@ interface Message {
   content: string;
 }
 
-const API_URL = 'https://cat-bot-backend-fccac5130c48.herokuapp.com';
+const API_URL = process.env.REACT_APP_API_URL || 'https://cat-bot-backend-fccac5130c48.herokuapp.com';
 
 const ChatMessage = ({ type, children }: { type: 'user' | 'bot', children: React.ReactNode }) => (
   <div className={`rounded-md p-2 mb-2 ${type === 'user' ? 'bg-green-800 self-start' : 'bg-green-900 self-end'} max-w-[80%]`}>
