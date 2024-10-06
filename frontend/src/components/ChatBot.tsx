@@ -7,6 +7,8 @@ interface Message {
   content: string;
 }
 
+const API_URL = 'https://cat-bot-backend-fccac5130c48.herokuapp.com';
+
 const ChatMessage = ({ type, children }: { type: 'user' | 'bot', children: React.ReactNode }) => (
   <div className={`rounded-md p-2 mb-2 ${type === 'user' ? 'bg-green-800 self-start' : 'bg-green-900 self-end'} max-w-[80%]`}>
     <p className={`text-sm ${type === 'user' ? 'text-green-300' : 'text-green-400'}`}>
@@ -42,7 +44,7 @@ const ChatBot: React.FC = () => {
     const savedSessionId = localStorage.getItem('chatSessionId');
     if (savedSessionId) {
       try {
-        const response = await axios.get(`http://localhost:3000/chat/incomplete/${savedSessionId}`);
+        const response = await axios.get(`${API_URL}/chat/incomplete/${savedSessionId}`);
         if (response.data.session) {
           setHasIncompleteSession(true);
           setSessionId(savedSessionId);
@@ -66,7 +68,7 @@ const ChatBot: React.FC = () => {
         getNextQuestion(sessionId);
       } else {
         console.log('Starting new session');
-        const response = await axios.post('http://localhost:3000/chat/start');
+        const response = await axios.post(`${API_URL}/chat/start`);
         console.log('New session response:', response.data);
         setSessionId(response.data.sessionId);
         localStorage.setItem('chatSessionId', response.data.sessionId);
@@ -87,7 +89,7 @@ const ChatBot: React.FC = () => {
     console.log('Getting next question for session:', sid);
     setIsLoading(true);
     try {
-      const response = await axios.get(`http://localhost:3000/chat/question/${sid}`);
+      const response = await axios.get(`${API_URL}/chat/question/${sid}`);
       console.log('Response from server:', response.data);
       if (response.data.question) {
         console.log('New question received:', response.data.question);
@@ -116,7 +118,7 @@ const ChatBot: React.FC = () => {
     setInputMessage('');
 
     try {
-      const response = await axios.post(`http://localhost:3000/chat/answer/${sessionId}`, { answer: inputMessage });
+      const response = await axios.post(`${API_URL}/chat/answer/${sessionId}`, { answer: inputMessage });
       console.log('Server response:', response.data);
       if (response.data.aiResponse) {
         setMessages(prev => [...prev, { type: 'bot', content: response.data.aiResponse }]);
@@ -128,7 +130,7 @@ const ChatBot: React.FC = () => {
           setMessages(prev => [...prev, { type: 'bot', content: thankYouMessage }]);
           setTimeout(() => {
             navigate('/');
-          }, 5000); // 5 saniye sonra anasayfaya yönlendir
+          }, 5000);
         } else {
           setMessages(prev => [...prev, { type: 'bot', content: response.data.nextQuestion }]);
         }
