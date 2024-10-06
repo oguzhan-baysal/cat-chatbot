@@ -6,6 +6,6 @@
   },
   "scripts": {
     "start": "cd backend && npm start",
-    "heroku-postbuild": "cd backend && npm install && npm install -g @nestjs/cli && npm run build"
+    "heroku-postbuild": "cd backend && npm install && npm run build"
   }
 }
