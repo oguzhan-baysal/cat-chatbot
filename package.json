@@ -1,11 +1,14 @@
 {
-    "name": "cat-chatbot",
-    "version": "1.0.0",
-    "engines": {
-      "node": "20.x"
-    },
-    "scripts": {
-      "start": "cd backend && npm start",
-      "heroku-postbuild": "cd backend && npm install && npm run build"
-    }
+  "name": "cat-chatbot",
+  "version": "1.0.0",
+  "engines": {
+    "node": "20.x"
+  },
+  "scripts": {
+    "start": "cd backend && npm start",
+    "heroku-postbuild": "cd backend && npm install && npm run build"
+  },
+  "dependencies": {
+    "@nestjs/cli": "^10.0.0"
   }
+}
